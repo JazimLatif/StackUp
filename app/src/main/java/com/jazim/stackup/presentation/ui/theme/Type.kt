@@ -1,4 +1,4 @@
-package com.jazim.stackup.presentation.theme
+package com.jazim.stackup.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

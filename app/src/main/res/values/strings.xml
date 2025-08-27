@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">StackUp</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="follow">Follow</string>
+    <string name="follow_unfollow_button">follow/ unfollow button</string>
 </resources>

@@ -1,21 +1,27 @@
 package com.jazim.stackup.data.repository
 
 import com.jazim.pixelnews.data.networking.ApiService
+import com.jazim.stackup.data.datastore.FollowingDataStore
+import com.jazim.stackup.data.toDomainModel
 import com.jazim.stackup.domain.model.User
 import com.jazim.stackup.domain.repository.UsersRepository
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class UsersRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val datastore: FollowingDataStore
 ): UsersRepository {
-    override suspend fun get(): Result<List<User>> {
+
+    override suspend fun getUsers(): Result<List<User>> {
         return try {
-            //TODO fix this to map to use a mapper
             val response = apiService.getUsers()
             if (response.isSuccessful) {
                 val apiResponse = response.body()
                 if (apiResponse != null) {
-                    Result.success(apiResponse)
+                    val followedIds = datastore.getAllFollowedUserIds().first()
+
+                    Result.success(apiResponse.toDomainModel(followedIds = followedIds))
                 } else {
                     Result.failure(Throwable("Response body is null"))
                 }
@@ -26,4 +32,16 @@ class UsersRepositoryImpl @Inject constructor(
             Result.failure(e)
         }
     }
+
+    override suspend fun toggleFollow(id: Int, isFollowed: Boolean): Result<Unit> {
+        return try {
+            datastore.toggleFollow(id, isFollowed)
+            Result.success(Unit)
+        } catch(e: Exception) {
+            Result.failure(e)
+        }
+
+    }
+
+
 }

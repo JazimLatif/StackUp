@@ -70,6 +70,8 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.material.icons.extended)
 
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.coroutines.test)
