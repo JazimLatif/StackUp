@@ -26,7 +26,7 @@ fun UserCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 4.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
@@ -37,8 +37,15 @@ fun UserCard(
         ) {
 
             Row {
+                // since profileImage is defaulted to "" if the profileImage was null in UserDto (via the mapper)
+                val painter = if (user.profileImage.isNotEmpty()) {
+                    rememberAsyncImagePainter(user.profileImage)
+                } else {
+                    painterResource(R.drawable.placeholder)
+                }
+
                 Image(
-                    painter = rememberAsyncImagePainter(user.profileImage),
+                    painter = painter,
                     contentDescription = "display image",
                     modifier = Modifier
                         .size(48.dp)

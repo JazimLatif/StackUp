@@ -9,9 +9,9 @@ fun UserDto.toDomainModel(isFollowed: Boolean = false): User {
         id = userId,
         displayName = displayName,
         reputation = reputation,
-        profileImage = profileImage,
-        location = location,
-        websiteUrl = websiteUrl,
+        profileImage = profileImage ?: "",
+        location = location ?: "",
+        websiteUrl = websiteUrl ?: "",
         isFollowed = isFollowed
     )
 }
