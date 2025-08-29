@@ -11,7 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,28 +26,27 @@ class UsersViewModel @Inject constructor(
     }
 
     fun getUsers() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _usersState.value = UserUiState(isLoading = true)
+        viewModelScope.launch {
+            _usersState.value = UserUiState()
             val result = usersRepository.getUsers()
 
-            withContext(Dispatchers.Main) {
-                _usersState.value = result.fold(
-                    onSuccess = { users ->
-                        UserUiState(
-                            isLoading = false,
-                            users = users,
-                            error = null
-                        )
-                    },
-                    onFailure = { throwable ->
-                        UserUiState(
-                            isLoading = false,
-                            users = emptyList(),
-                            error = throwable.message
-                        )
-                    }
-                )
-            }
+            _usersState.value = result.fold(
+                onSuccess = { users ->
+                    UserUiState(
+                        isLoading = false,
+                        users = users,
+                        error = null
+                    )
+                },
+                onFailure = { throwable ->
+                    UserUiState(
+                        isLoading = false,
+                        users = emptyList(),
+                        error = throwable.message
+                    )
+                }
+            )
+
         }
     }
 
