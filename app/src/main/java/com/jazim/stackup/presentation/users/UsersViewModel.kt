@@ -28,7 +28,7 @@ class UsersViewModel @Inject constructor(
 
     fun getUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            _usersState.value = UserUiState(isLoading = true)
+            _usersState.value = UserUiState()
             val result = usersRepository.getUsers()
 
             withContext(Dispatchers.Main) {
