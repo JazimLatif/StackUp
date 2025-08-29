@@ -58,6 +58,9 @@ class UsersViewModel @Inject constructor(
             if (result.isSuccess) {
                 // allows us to update the list in place rather than re fetching from the API
                 // I could also have used a lazyListState but this seems more sensible for the use case
+                // If the follow/unfollow were linked to a network call, this would have to be changed,
+                // however since currently it's on device only, this is a more seamless way of
+                // following and unfollowing users on the device side
                 _usersState.value = _usersState.value.copy(
                     users = _usersState.value.users.map {
                         if (it.id == user.id) it.copy(isFollowed = !it.isFollowed)

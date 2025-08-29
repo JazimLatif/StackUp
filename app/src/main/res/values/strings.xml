@@ -3,4 +3,5 @@
     <string name="unfollow">Unfollow</string>
     <string name="follow">Follow</string>
     <string name="follow_unfollow_button">follow/ unfollow button</string>
+    <string name="retry">Retry</string>
 </resources>
