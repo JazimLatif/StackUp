@@ -1,4 +1,4 @@
-package com.jazim.pixelnews.data.networking
+package com.jazim.stackup.data.networking
 
 import com.jazim.stackup.data.models.UsersResponse
 import retrofit2.Response

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TemplateProject"
+rootProject.name = "StackUp"
 include(":app")
  

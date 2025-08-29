@@ -1,6 +1,6 @@
 package com.jazim.stackup.di
 
-import com.jazim.pixelnews.data.networking.ApiService
+import com.jazim.stackup.data.networking.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
