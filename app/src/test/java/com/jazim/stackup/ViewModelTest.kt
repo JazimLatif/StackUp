@@ -87,7 +87,6 @@ class UsersViewModelTest {
     @Test
     fun toggleFollowFlipsFollowedState() = runTest {
 
-
         coEvery { usersRepository.getUsers() } returns Result.success(testUsers)
         coEvery { usersRepository.toggleFollow(1, true) } returns Result.success(Unit)
 
@@ -105,7 +104,6 @@ class UsersViewModelTest {
     // Since this test calls Log.e on the error of toggleFollow, I had to import roboelectric (since that's an Android function)
     @Test
     fun toggleFollowDoesntFlipFollowedStateOnFailure() = runTest {
-
 
         coEvery { usersRepository.getUsers() } returns Result.success(testUsers)
         val exception = Exception("Failed")

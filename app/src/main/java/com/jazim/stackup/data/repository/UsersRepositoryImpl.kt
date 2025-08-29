@@ -33,9 +33,9 @@ class UsersRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun toggleFollow(id: Int, isFollowed: Boolean): Result<Unit> {
+    override suspend fun toggleFollow(id: Int, newFollowedState: Boolean): Result<Unit> {
         return try {
-            datastore.toggleFollow(id, isFollowed)
+            datastore.toggleFollow(id, newFollowedState)
             Result.success(Unit)
         } catch(e: Exception) {
             Result.failure(e)
