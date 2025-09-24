@@ -21,12 +21,15 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.jazim.stackup.R
+import com.jazim.stackup.presentation.navigation.Screen
 import com.jazim.stackup.presentation.ui.components.UserCard
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun UsersScreen(
+    navController: NavController,
     usersViewModel: UsersViewModel
 ) {
 
@@ -72,7 +75,8 @@ fun UsersScreen(
                 items(usersState.users) { user ->
                     UserCard(
                         user = user,
-                        onFollowClick = { usersViewModel.toggleFollow(user) }
+                        onFollowClick = { usersViewModel.toggleFollow(user) },
+                        onCardClick = { navController.navigate(Screen.UserDetailScreen.route + "/${user.id}") }
                     )
                 }
             }
