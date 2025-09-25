@@ -1,6 +1,7 @@
 package com.jazim.stackup.presentation.users
 
 import android.annotation.SuppressLint
+import android.util.Log.e
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,9 +22,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.jazim.stackup.R
 import com.jazim.stackup.presentation.navigation.Screen
+import com.jazim.stackup.presentation.ui.components.LoadingScreen
 import com.jazim.stackup.presentation.ui.components.UserCard
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -33,46 +36,14 @@ fun UsersScreen(
     usersViewModel: UsersViewModel
 ) {
 
-    val usersState by usersViewModel.usersState.collectAsState()
+    val usersState by usersViewModel.usersState.collectAsStateWithLifecycle()
 
-    when {
-        usersState.isLoading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(Modifier.testTag("LoadingIndicator"))
-            }
-        }
-
-        usersState.error != null -> {
-            Box(
-                modifier = Modifier.fillMaxSize().testTag("ErrorScreen"),
-                contentAlignment = Alignment.Center
-
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = usersState.error.toString(),
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                    Button(
-                        onClick = { usersViewModel.getUsers() },
-                        shape = RoundedCornerShape(12.dp),
-                    ) {
-                        Text(stringResource(R.string.retry))
-                    }
-                }
-            }
-        }
-
-        else -> {
+    when (usersState){
+        is UsersUiState.Loading -> LoadingScreen()
+        is UsersUiState.Error -> {}
+        is UsersUiState.Success -> {
             LazyColumn(modifier = Modifier.testTag("MainScreen")) {
-                items(usersState.users) { user ->
+                items((usersState as UsersUiState.Success).users) { user ->
                     UserCard(
                         user = user,
                         onFollowClick = { usersViewModel.toggleFollow(user) },
@@ -83,4 +54,5 @@ fun UsersScreen(
         }
     }
 }
+
 

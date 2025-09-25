@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocalPolice
+import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -73,7 +74,7 @@ fun UserCard(
                         Text(text = user.displayName, style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.widthIn(max = 140.dp)
+                            modifier = Modifier.fillMaxWidth(0.6f)
                         )
 
                         Row {
@@ -103,7 +104,7 @@ fun UserCard(
             ){
                 Row {
                     Icon(
-                        Icons.Default.LocalPolice,
+                        Icons.Default.WorkspacePremium,
                         contentDescription = "bronze medals",
                         tint = Color(176, 150, 80)
                     )
@@ -112,17 +113,17 @@ fun UserCard(
                 }
                 Row {
                     Icon(
-                        Icons.Default.LocalPolice,
+                        Icons.Default.WorkspacePremium,
                         contentDescription = "silver medals",
-                        tint = Color(100, 100, 100)
+                        tint = Color(170, 170, 170)
                     )
                     Text(user.badges.bronze.toString())
                 }
                 Row {
                     Icon(
-                        Icons.Default.LocalPolice,
+                        Icons.Default.WorkspacePremium,
                         contentDescription = "gold medals",
-                        tint = Yellow
+                        tint = Color(250, 200, 13)
                     )
                     Text(user.badges.bronze.toString())
                 }
@@ -141,7 +142,7 @@ fun ProfileImagePreview() {
             User(
                 id = 1,
                 displayName = "Jeff",
-                profileImage = "https://i.sstatic.net/I4fiW.jpg?s=256",
+                profileImage = "",
                 reputation = 2666,
                 location = "",
                 websiteUrl = "",

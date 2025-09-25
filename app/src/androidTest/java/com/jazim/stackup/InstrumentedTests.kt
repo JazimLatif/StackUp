@@ -8,7 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.jazim.stackup.domain.model.User
 import com.jazim.stackup.presentation.state.UserUiState
-import com.jazim.stackup.presentation.newfeature.UsersScreen
+import com.jazim.stackup.presentation.detailScreen.UsersScreen
 import com.jazim.stackup.presentation.users.UsersViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
