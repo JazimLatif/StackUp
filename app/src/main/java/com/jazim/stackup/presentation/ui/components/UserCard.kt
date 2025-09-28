@@ -37,6 +37,7 @@ fun UserCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(12.dp))
             .clickable(onClick = { onCardClick(Screen.UserDetailScreen.route) })
         ,
         shape = RoundedCornerShape(12.dp)

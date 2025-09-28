@@ -6,11 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.jazim.stackup.domain.model.User
 import com.jazim.stackup.domain.usecase.GetUserUseCase
 import com.jazim.stackup.domain.usecase.ToggleFollowUseCase
+import com.jazim.stackup.presentation.detailScreen.SingleUserState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
@@ -20,8 +21,8 @@ class DetailViewModel @Inject constructor(
 
     val userId: Int = checkNotNull(savedStateHandle["userId"])
 
-    var singleUser = MutableStateFlow<SingleUserState>(SingleUserState.Loading)
-    private set
+    private val _singleUserState = MutableStateFlow<SingleUserState>(Loading)
+    val singleUserState = _singleUserState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -32,8 +33,9 @@ class DetailViewModel @Inject constructor(
     suspend fun getUserById(userId: Int) {
         val result = getUserUseCase.invoke(userId)
         result.fold(
-            onSuccess = { singleUser.value = SingleUserState.Success(it) },
-            onFailure = { singleUser.value = SingleUserState.Error(it) }
+            onSuccess = { _singleUserState.value = Success(it) },
+//            onFailure = { _singleUserState.value = Error(ErrorState(it.message))}
+            onFailure = { _singleUserState.value = Error(it.message!!) }
         )
     }
 
@@ -42,8 +44,14 @@ class DetailViewModel @Inject constructor(
     }
 }
 
-sealed class SingleUserState() {
+sealed class SingleUserState {
     data object Loading: SingleUserState()
     data class Success(val user: User): SingleUserState()
-    data class Error(val throwable: Throwable): SingleUserState()
+//    data class Error(val errorState: ErrorState): SingleUserState()
+    data class Error(val message: String): SingleUserState()
 }
+//
+//sealed class ErrorState(val message: String) {
+//    data class NetworkError(val message: String): SingleUserState()
+//    data class UnknownError(val message: String): SingleUserState()
+//}

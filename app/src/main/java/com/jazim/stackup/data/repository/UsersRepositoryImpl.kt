@@ -13,9 +13,21 @@ class UsersRepositoryImpl @Inject constructor(
     private val datastore: FollowingDataStore
 ): UsersRepository {
 
-    override suspend fun getUsers(): Result<List<User>> {
+    override suspend fun getUsers(
+        page: Int,
+        pageSize: Int,
+        order: String,
+        sort: String,
+        site: String
+    ): Result<List<User>> {
         return try {
-            val response = apiService.getUsers()
+            val response = apiService.getUsers(
+                page,
+                pageSize,
+                order,
+                sort,
+                site
+            )
             if (response.isSuccessful) {
                 val apiResponse = response.body()
                 if (apiResponse != null) {
@@ -26,7 +38,7 @@ class UsersRepositoryImpl @Inject constructor(
                     Result.failure(Throwable("Response body is null"))
                 }
             } else {
-                Result.failure(Throwable("Failed with code: ${response.code()}"))
+                Result.failure(Throwable("${response.message().ifEmpty { "Failed with code" }}: ${response.code()}"))
             }
         } catch(e: Exception) {
             Result.failure(e)
@@ -35,17 +47,18 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun getUser(userId: Int): Result<User> {
         return try {
-            val response = apiService.getUsers()
+            val response = apiService.getUser(userId)
             if (response.isSuccessful) {
                 val apiResponse = response.body()
                 if (apiResponse != null) {
                     val followedIds = datastore.getAllFollowedUserIds().first()
-                    Result.success(apiResponse.toDomainModel(followedIds = followedIds).filter { it.id == userId }.get(0))
+                    // optimistically assuming no duplicates for now
+                    Result.success(apiResponse.toDomainModel(followedIds = followedIds)[0])
                 } else {
                     Result.failure(Throwable("Response body is null"))
                 }
             } else {
-                Result.failure(Throwable("Failed with code: ${response.code()}"))
+                Result.failure(Throwable("${response.message().ifEmpty { "Failed with code" }}: ${response.code()}"))
             }
         } catch(e: Exception) {
             Result.failure(e)
