@@ -35,15 +35,6 @@ class UsersViewModel @Inject constructor(
     private val _pageNumberState = MutableStateFlow(1)
     val pageNumberState: StateFlow<Int> = _pageNumberState.asStateFlow()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val refreshFlow = _pageNumberState
-        .onStart { emit(1) }
-        .flatMapLatest { page ->
-            getUsersListUseCase(page)
-                .catch { emit(emptyList()) }
-        }
-        .onEach { /* repository updates _usersFlow inside the use case */ }
-
     val usersState: StateFlow<UsersUiState> =
         repository.usersFlow
             .map <List<User>,  UsersUiState>{UsersUiState.Success(it) }
