@@ -1,6 +1,7 @@
 package com.jazim.stackup.presentation.users
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog.show
 import android.util.Log.e
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -35,7 +36,6 @@ import com.jazim.stackup.presentation.navigation.Screen
 import com.jazim.stackup.presentation.ui.components.ErrorScreen
 import com.jazim.stackup.presentation.ui.components.LoadingScreen
 import com.jazim.stackup.presentation.ui.components.UserCard
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -58,7 +58,6 @@ fun UsersMainScreen(
             ErrorScreen(state.message)
         }
         is UsersUiState.Success -> {
-
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
