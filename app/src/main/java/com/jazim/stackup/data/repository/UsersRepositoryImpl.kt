@@ -1,6 +1,7 @@
 package com.jazim.stackup.data.repository
 
 import android.R.attr.order
+import android.util.Log
 import com.jazim.stackup.data.datastore.FollowingDataStore
 import com.jazim.stackup.data.networking.ApiService
 import com.jazim.stackup.data.toDomainModel
@@ -18,17 +19,22 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.collections.emptyList
 
+@Singleton
 class UsersRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val datastore: FollowingDataStore
 ): UsersRepository {
 
-    val fakeUserList = listOf(User(1,"foobar", 200, "", "", "", Badges(1, 2, 5)),User(2,"foobar", 400, "", "", "",Badges(1, 2, 5)))
 
-            private val _usersFlow = MutableStateFlow<List<User>>(fakeUserList)
+    private val _usersFlow = MutableStateFlow<List<User>>(emptyList())
     override val usersFlow: StateFlow<List<User>> = _usersFlow.asStateFlow()
+
+    init {
+        Log.d("HelloJazim", "Repo ctor: ${this.hashCode()}")
+    }
 
     override fun getUsers(
         page: Int,
@@ -48,7 +54,6 @@ class UsersRepositoryImpl @Inject constructor(
             val followedIds = datastore.getAllFollowedUserIds().first()
             val users = response.body()?.toDomainModel(followedIds) ?: emptyList()
             _usersFlow.value = users
-            emit(users)
         } else {
             throw Exception("Failed to fetch users: ${response.errorBody()?.string()}")
         }

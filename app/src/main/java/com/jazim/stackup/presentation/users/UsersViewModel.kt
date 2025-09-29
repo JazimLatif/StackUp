@@ -3,18 +3,23 @@ package com.jazim.stackup.presentation.users
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jazim.stackup.data.repository.UsersRepositoryImpl
 import com.jazim.stackup.domain.model.User
+import com.jazim.stackup.domain.repository.UsersRepository
 import com.jazim.stackup.domain.usecase.GetUsersListUseCase
 import com.jazim.stackup.domain.usecase.ToggleFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -24,43 +29,36 @@ import javax.inject.Inject
 class UsersViewModel @Inject constructor(
     private val getUsersListUseCase: GetUsersListUseCase,
     private val toggleFollowUseCase: ToggleFollowUseCase,
-    private val repository: UsersRepositoryImpl
+    repository: UsersRepository
 ) : ViewModel() {
 
     private val _pageNumberState = MutableStateFlow(1)
     val pageNumberState: StateFlow<Int> = _pageNumberState.asStateFlow()
 
-    // Hot flow the UI observes
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val refreshFlow = _pageNumberState
+        .onStart { emit(1) }
+        .flatMapLatest { page ->
+            getUsersListUseCase(page)
+                .catch { emit(emptyList()) }
+        }
+        .onEach { /* repository updates _usersFlow inside the use case */ }
+
     val usersState: StateFlow<UsersUiState> =
         repository.usersFlow
-            .map<List<User>, UsersUiState> { UsersUiState.Success(it) }
-            .catch { emit(UsersUiState.Error("Couldn't load users")) }
+            .map <List<User>,  UsersUiState>{UsersUiState.Success(it) }
+            .catch {
+                emit(UsersUiState.Error("Couldn't load users"))
+            }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), UsersUiState.Loading)
 
-    init {
-        // Trigger initial and subsequent page loads whenever page number changes
-        viewModelScope.launch {
-            pageNumberState.collect { page ->
-                refresh(page)
-            }
-        }
-    }
 
-    /** Force a network refresh for the current page. */
-    fun refresh(page: Int = pageNumberState.value) {
+    init {
         viewModelScope.launch {
-            getUsersListUseCase(
-                page = page,
-                pageSize = 20,
-                order = "desc",
-                sort = "reputation",
-                site = "stackoverflow"
-            )
-            .catch { e ->
-                // Optional: surface a transient error state
-                // e.g. _snackbar.tryEmit("Failed to refresh: ${e.message}")
-            }
-            .collect()
+            pageNumberState
+                .collect { page ->
+                    getUsersListUseCase(page).collect()
+                }
         }
     }
 

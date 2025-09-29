@@ -53,7 +53,9 @@ fun UsersMainScreen(
     val coroutineScope = rememberCoroutineScope()
 
     when (val state = usersState.value){
-        is UsersUiState.Loading -> LoadingScreen()
+        is UsersUiState.Loading -> {
+            LoadingScreen()
+        }
         is UsersUiState.Error -> {
             ErrorScreen(state.message)
         }
