@@ -6,9 +6,10 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.jazim.stackup.domain.model.Badges
 import com.jazim.stackup.domain.model.User
 import com.jazim.stackup.presentation.state.UserUiState
-import com.jazim.stackup.presentation.users.UsersScreen
+import com.jazim.stackup.presentation.detailScreen.UsersScreen
 import com.jazim.stackup.presentation.users.UsersViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -86,7 +87,7 @@ class InstrumentedTests {
 
     @Test
     fun usersScreenShowsMainScreenWhenOnHappyPath() {
-        val fakeUserList = listOf(User(1,"foobar", 200, "", "", ""),User(2,"foobar", 400, "", "", ""))
+        val fakeUserList = listOf(User(1,"foobar", 200, "", "", "", Badges(1, 2, 5)),User(2,"foobar", 400, "", "", "",Badges(1, 2, 5))
         val mockState = UserUiState(false, fakeUserList, null)
         every { usersViewModel.usersState } returns MutableStateFlow(mockState)
 

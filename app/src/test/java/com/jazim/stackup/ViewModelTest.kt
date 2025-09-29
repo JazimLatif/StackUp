@@ -1,6 +1,7 @@
 package com.jazim.stackup
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.jazim.stackup.domain.model.Badges
 import com.jazim.stackup.domain.model.User
 import com.jazim.stackup.domain.repository.UsersRepository
 import com.jazim.stackup.presentation.users.UsersViewModel
@@ -27,28 +28,16 @@ import org.robolectric.RobolectricTestRunner
 @ExperimentalCoroutinesApi
 class UsersViewModelTest {
 
-    private val testDispatcher = StandardTestDispatcher()
-
-    @get:Rule
-    val instantExecutorRule = InstantTaskExecutorRule()
-
     private lateinit var usersRepository: UsersRepository
 
     @Before
     fun setup() {
-        Dispatchers.setMain(testDispatcher)
         usersRepository = mockk(relaxed = true)
     }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        clearAllMocks()
-    }
-
     private val testUsers = listOf(
-        User(1, "foo", 100, "", "", "", false),
-        User(2, "foo", 200, "", "", "", false)
+        User(1, "foo", 100, "", "", "", Badges(1, 2, 3),false),
+        User(2, "foo", 200, "", "", "", Badges(1, 2, 3),false)
     )
 
     @Test
@@ -57,8 +46,6 @@ class UsersViewModelTest {
         coEvery { usersRepository.getUsers() } returns Result.success(testUsers)
 
         val usersViewModel = UsersViewModel(usersRepository)
-
-        advanceUntilIdle()
 
         val actualState = usersViewModel.usersState.value
         assertEquals(false, actualState.isLoading)
@@ -75,7 +62,6 @@ class UsersViewModelTest {
 
         val usersViewModel = UsersViewModel(usersRepository)
 
-        advanceUntilIdle()
 
         val actualState = usersViewModel.usersState.value
         assertEquals(false, actualState.isLoading)
@@ -93,7 +79,6 @@ class UsersViewModelTest {
         val usersViewModel = UsersViewModel(usersRepository)
 
         usersViewModel.toggleFollow(testUsers[0])
-        advanceUntilIdle()
 
         val updatedUser = usersViewModel.usersState.value.users.first { it.id == 1 }
         assertEquals(true, updatedUser.isFollowed)
@@ -110,7 +95,6 @@ class UsersViewModelTest {
         coEvery { usersRepository.toggleFollow(1, true) } returns Result.failure(exception)
         val usersViewModel = UsersViewModel(usersRepository)
         usersViewModel.toggleFollow(testUsers[0])
-        advanceUntilIdle()
 
         val updatedUser = usersViewModel.usersState.value.users.first { it.id == 1 }
         assertEquals(false,  updatedUser.isFollowed)

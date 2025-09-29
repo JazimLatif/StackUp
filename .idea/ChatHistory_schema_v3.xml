@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChatHistoryState">
+    <option name="chatSessions" value="{&quot;400e64c2-0503-4347-a968-dc3b73ade6bd&quot;:{&quot;id&quot;:&quot;400e64c2-0503-4347-a968-dc3b73ade6bd&quot;,&quot;name&quot;:&quot;Follow Button State Sync Issue Between Screens and ViewModel&quot;,&quot;timestamp&quot;:1759158918988,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:[{&quot;type&quot;:&quot;text&quot;,&quot;text&quot;:&quot;\u003cuser_query\u003e\nI\u0027m trying to make an app that has a follow button on a screen with a list of users, and also on the profile of a user. I\u0027m updating the followed state in a datastore, and right now I\u0027m having an issue where when I follow on the list screen, the followedState doesn\u0027t update. I\u0027ve tried to make the list of users a flow because I thought that was a good idea, so that when the flow gets updated down stream, the UI will react, a bit like what is working for the profile screen. to do this Ive kept a list of users as a flow in my repositoryimplemenation, but I\u0027m struggling with how to get it to be observed by my viewmodel(s)\n\u003c/user_query\u003e&quot;}]},{&quot;role&quot;:&quot;assistant&quot;,&quot;content&quot;:[]}]}}" />
+  </component>
+</project>

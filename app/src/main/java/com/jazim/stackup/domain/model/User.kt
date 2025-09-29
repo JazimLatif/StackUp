@@ -7,5 +7,6 @@ data class User(
     val profileImage: String,
     val location: String?,
     val websiteUrl: String?,
+    val badges: Badges,
     val isFollowed: Boolean = false
 )
