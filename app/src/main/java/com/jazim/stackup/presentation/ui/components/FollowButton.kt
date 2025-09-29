@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jazim.stackup.R
@@ -27,8 +28,7 @@ import com.jazim.stackup.R
 @Composable
 fun FollowUnfollowButton(
     isFollowed: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit
 ) {
     val buttonColors = when (isFollowed) {
         true -> {
@@ -51,7 +51,7 @@ fun FollowUnfollowButton(
 
     Button(
         onClick = onClick,
-        modifier = modifier.width(140.dp),
+        modifier = Modifier.width(130.dp),
         shape = RoundedCornerShape(6.dp),
         colors = buttonColors,
         border = border
@@ -69,10 +69,11 @@ fun FollowUnfollowButton(
                     }
                 )
                 Spacer(Modifier.size(4.dp))
+
                 Icon(
-                    imageVector = when (followed) {
-                        true -> Icons.Filled.PersonRemove
-                        false -> Icons.Filled.PersonAdd
+                    painter = when (followed) {
+                        true -> painterResource( R.drawable.person_remove_24px)
+                        false -> painterResource( R.drawable.person_add_24px)
                     },
                     contentDescription = "Icon to follow or unfollow user",
                     tint = when (followed) {

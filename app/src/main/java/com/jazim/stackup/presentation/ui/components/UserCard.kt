@@ -75,7 +75,7 @@ fun UserCard(
                         Text(text = user.displayName, style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.fillMaxWidth(0.6f)
+                            modifier = Modifier.fillMaxWidth(0.5f)
                         )
 
                         Row {

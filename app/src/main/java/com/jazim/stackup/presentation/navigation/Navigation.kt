@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.jazim.stackup.presentation.detailScreen.DetailMainScreen
 import com.jazim.stackup.presentation.detailScreen.DetailViewModel
-import com.jazim.stackup.presentation.users.UsersScreen
+import com.jazim.stackup.presentation.users.UsersMainScreen
 import com.jazim.stackup.presentation.users.UsersViewModel
 
 @Composable
@@ -22,7 +22,7 @@ fun Navigation(navController: NavHostController) {
         composable(route = Screen.UsersScreen.route) {
             val usersViewModel = hiltViewModel<UsersViewModel>()
 
-            UsersScreen(navController, usersViewModel)
+            UsersMainScreen(navController, usersViewModel)
         }
 
         composable(

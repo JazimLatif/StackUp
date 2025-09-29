@@ -1,46 +1,55 @@
 package com.jazim.stackup.presentation.detailScreen
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jazim.stackup.domain.model.User
-import com.jazim.stackup.domain.usecase.GetUserUseCase
+import com.jazim.stackup.domain.usecase.GetUserByIdUseCase
 import com.jazim.stackup.domain.usecase.ToggleFollowUseCase
-import com.jazim.stackup.presentation.detailScreen.SingleUserState.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
+    getUserByIdUseCase: GetUserByIdUseCase,
     private val toggleFollowUseCase: ToggleFollowUseCase,
     savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
     val userId: Int = checkNotNull(savedStateHandle["userId"])
 
-    private val _singleUserState = MutableStateFlow<SingleUserState>(Loading)
-    val singleUserState = _singleUserState.asStateFlow()
+    val singleUserState : StateFlow<SingleUserState> =
+        getUserByIdUseCase(userId)
+            .map<User, SingleUserState >{ SingleUserState.Success(it) }
+            .catch { emit(SingleUserState.Error("Couldn't load user")) }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SingleUserState.Loading)
 
-    init {
+
+    fun toggleFollow(user: User) {
         viewModelScope.launch {
-            getUserById(userId)
+            val result = toggleFollowUseCase(user.id, !user.isFollowed)
+            result.fold(
+                onSuccess = {
+                    Log.e(
+                        javaClass.name,
+                        "updated FollowState: ${!user.isFollowed}"
+                    )
+                },
+                onFailure = {
+                    Log.e(
+                        javaClass.name,
+                        "Failed to update follow state: ${result.exceptionOrNull()}"
+                    )
+                }
+            )
         }
-    }
-
-    suspend fun getUserById(userId: Int) {
-        val result = getUserUseCase.invoke(userId)
-        result.fold(
-            onSuccess = { _singleUserState.value = Success(it) },
-//            onFailure = { _singleUserState.value = Error(ErrorState(it.message))}
-            onFailure = { _singleUserState.value = Error(it.message!!) }
-        )
-    }
-
-    suspend fun toggleFollow (user: User) {
-        toggleFollowUseCase.invoke(user.id, !user.isFollowed)
     }
 }
 
@@ -50,6 +59,7 @@ sealed class SingleUserState {
 //    data class Error(val errorState: ErrorState): SingleUserState()
     data class Error(val message: String): SingleUserState()
 }
+
 //
 //sealed class ErrorState(val message: String) {
 //    data class NetworkError(val message: String): SingleUserState()

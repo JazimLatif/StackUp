@@ -73,7 +73,6 @@ fun UserDetailScreen(
                 .clip(RoundedCornerShape(6.dp))
         )
 
-
         Text(
             text = user.displayName, style = MaterialTheme.typography.titleMedium,
             maxLines = 1,
@@ -96,7 +95,6 @@ fun UserDetailScreen(
         }
         Text("Location: ${Html.fromHtml(user.location, Html.FROM_HTML_MODE_LEGACY)}")
 
-        val uriHandler = LocalUriHandler.current
 
         Text(
             buildAnnotatedString {
@@ -112,7 +110,9 @@ fun UserDetailScreen(
             }
         )
 
-        FollowUnfollowButton(user.isFollowed, onClick = { onFollowed(user.id) })
+        FollowUnfollowButton(
+            user.isFollowed,
+            onClick = { onFollowed(user.id) })
 
     }
 }

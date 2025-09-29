@@ -16,9 +16,4 @@ interface ApiService {
         @Query("site") site: String = "stackoverflow"
     ): Response<UsersResponse>
 
-    @GET("2.2/users/{userId}")
-    suspend fun getUser(
-        @Path("userId") userId: Int,
-        @Query("site") site: String = "stackoverflow"
-    ): Response<UsersResponse>
 }

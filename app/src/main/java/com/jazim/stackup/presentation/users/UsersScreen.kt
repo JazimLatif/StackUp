@@ -40,7 +40,7 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UsersScreen(
+fun UsersMainScreen(
     navController: NavController,
     usersViewModel: UsersViewModel
 ) {
@@ -71,7 +71,9 @@ fun UsersScreen(
                     items(state.users) { user ->
                         UserCard(
                             user = user,
-                            onFollowClick = { usersViewModel.toggleFollow(user) },
+                            onFollowClick = {
+                                usersViewModel.toggleFollow(user)
+                            },
                             onCardClick = { navController.navigate(Screen.UserDetailScreen.route + "/${user.id}") }
                         )
                     }
@@ -102,7 +104,6 @@ fun UsersScreen(
                     ) { Text("Next Page >")}
                 }
             }
-
         }
     }
 }

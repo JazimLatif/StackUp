@@ -19,19 +19,15 @@ fun DetailMainScreen(
 ) {
     val singleUserState = detailViewModel.singleUserState.collectAsStateWithLifecycle()
 
-    val coroutineScope = rememberCoroutineScope()
-
     when (val state = singleUserState.value) {
         is SingleUserState.Loading -> {
             LoadingScreen()
         }
         is SingleUserState.Error -> { ErrorScreen(state.message) }
         is SingleUserState.Success -> {
-            UserDetailScreen(state.user, {
-                coroutineScope.launch {
-                    detailViewModel.toggleFollow(state.user)
-                }
-                }
+            UserDetailScreen(
+                user = state.user,
+                onFollowed = { detailViewModel.toggleFollow(state.user) }
             )
         }
     }
