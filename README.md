@@ -1,37 +1,9 @@
-# StackOverflow API pagination and navigation practice app
+# StackOverflow users ranking app
 
-This was a fun project that allowed me to solidify some best practices and hopefully show off a lot of my coding ability.
+This was an app I wrote to practice some skills I was lacking in, namely navigation, flows and using 2 viewmodels to pass data around an app via a stateful repository.
 
-I attempted to write clean, SOLID code, demonstrating separation of concerns, clean architecture, and sound MVVM design decisions.
+It started out using one viewmodel, and I added a second screen to get a user, but then the followed and unfollowed states didn't match up, as both VMs held a separate instance of a List<User> and a single User
+In order to fix this issue, I made the repository expose a single source of truth of Flow<List<User>>, and the viewmodels observe this, therefore all updates to a user
+on one screen, were shown on the other.
 
-The project is scalable; I included a navigation component in case more screens need to be added.
-
-I attempted to handle errors gracefully, and used material theming to (hopefully) make a pleasant user experience.
-
----
-
-## How I used AI
-
-- Creating data classes (from the given format of API response)
-- For formatting this Readme
-- Helping to debug some testing issues
-- Giving me colours for the material theme based on StackOverflow's colour scheme
-- Some dependency injection tips for getting the datastore
-
----
-
-## Improvements
-
-Given more time, there are some cool features I would have liked to add:
-
-- Refactor to not use hardcoded dimensions (currently not very responsive for tablets; hardcoded dimension values shouldn't be used in a production app)
-- The ability to go through more pages of results (Paging 3 library or a bespoke solution perhaps)
-- Page size change, allow for more than 20 users (currently hardcoded based on specification)
-- Pull down to refresh (not needed for this implementation, but in other scenarios would be useful)
-- API call for follow/unfollow (would require some refactoring)
-- More tests
-- Not all strings are extracted as resources, so not good for translating
-
----
-
-## Thanks again!
+I took inspiration from the Now in Android github repo and used Sealed classes to handle state properly.
