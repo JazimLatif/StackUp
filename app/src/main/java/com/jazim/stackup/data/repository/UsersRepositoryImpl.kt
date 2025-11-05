@@ -32,30 +32,25 @@ class UsersRepositoryImpl @Inject constructor(
     private val _usersFlow = MutableStateFlow<List<User>>(emptyList())
     override val usersFlow: StateFlow<List<User>> = _usersFlow.asStateFlow()
 
-    init {
-        Log.d("HelloJazim", "Repo ctor: ${this.hashCode()}")
-    }
-
-    override fun getUsers(
+    override suspend fun refreshUsers(
         page: Int,
         pageSize: Int,
         order: String,
         sort: String,
         site: String
-    ): Flow<List<User>> = flow {
-        val response = apiService.getUsers(
-            page,
-            pageSize,
-            order,
-            sort,
-            site
-        )
-        if (response.isSuccessful) {
-            val followedIds = datastore.getAllFollowedUserIds().first()
-            val users = response.body()?.toDomainModel(followedIds) ?: emptyList()
-            _usersFlow.value = users
-        } else {
-            throw Exception("Failed to fetch users: ${response.errorBody()?.string()}")
+    ): Result<Unit> {
+        return try {
+            val response = apiService.getUsers(page, pageSize, order, sort, site)
+            if (response.isSuccessful) {
+                val followedIds = datastore.getAllFollowedUserIds().first()
+                val users = response.body()?.toDomainModel(followedIds) ?: emptyList()
+                _usersFlow.value = users
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Failed to fetch users: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 

@@ -6,13 +6,13 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface UsersRepository {
     val usersFlow: StateFlow<List<User>>
-    fun getUsers(
+    suspend fun refreshUsers(
         page: Int,
         pageSize: Int,
         order: String,
         sort: String,
         site: String
-    ): Flow<List<User>>
+    ): Result<Unit>
     fun getUserById(userId: Int): Flow<User>
     suspend fun toggleFollow(id: Int, newFollowedState: Boolean): Result<Unit>
 

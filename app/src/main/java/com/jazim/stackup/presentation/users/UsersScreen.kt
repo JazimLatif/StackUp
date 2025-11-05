@@ -69,7 +69,7 @@ fun UsersMainScreen(
                     modifier = Modifier.testTag("MainScreen").weight(1f),
                     state = listState
                 ) {
-                    items(state.users) { user ->
+                    items(state.users, key = {it.id}) { user ->
                         UserCard(
                             user = user,
                             onFollowClick = {

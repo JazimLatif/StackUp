@@ -6,9 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocalPolice
-import androidx.compose.material.icons.filled.WorkspacePremium
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -53,7 +50,7 @@ fun UserCard(
             ) {
 
                 Row {
-                    // since profileImage is defaulted to "" if the profileImage was null in UserDto (via the mapper)
+                    // Since profileImage is defaulted to "" if the profileImage was null in UserDto (via the mapper)
                     val painter = if (user.profileImage.isNotEmpty()) {
                         rememberAsyncImagePainter(user.profileImage)
                     } else {
@@ -105,7 +102,7 @@ fun UserCard(
             ){
                 Row {
                     Icon(
-                        Icons.Default.WorkspacePremium,
+                        painterResource(R.drawable.workspace_premium_24px),
                         contentDescription = "bronze medals",
                         tint = Color(176, 150, 80)
                     )
@@ -114,7 +111,7 @@ fun UserCard(
                 }
                 Row {
                     Icon(
-                        Icons.Default.WorkspacePremium,
+                        painterResource(R.drawable.workspace_premium_24px),
                         contentDescription = "silver medals",
                         tint = Color(170, 170, 170)
                     )
@@ -122,7 +119,7 @@ fun UserCard(
                 }
                 Row {
                     Icon(
-                        Icons.Default.WorkspacePremium,
+                        painterResource(R.drawable.workspace_premium_24px),
                         contentDescription = "gold medals",
                         tint = Color(250, 200, 13)
                     )
