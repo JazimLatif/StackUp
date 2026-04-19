@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun UsersMainScreen(
-    navController: NavController,
+    navigateToUser: (Int) -> Unit,
     usersViewModel: UsersViewModel
 ) {
 
@@ -75,7 +75,7 @@ fun UsersMainScreen(
                             onFollowClick = {
                                 usersViewModel.toggleFollow(user)
                             },
-                            onCardClick = { navController.navigate(Screen.UserDetailScreen.route + "/${user.id}") }
+                            onCardClick = { navigateToUser(user.id) }
                         )
                     }
                 }

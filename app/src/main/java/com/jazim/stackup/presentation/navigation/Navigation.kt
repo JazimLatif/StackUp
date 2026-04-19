@@ -22,7 +22,7 @@ fun Navigation(navController: NavHostController) {
         composable(route = Screen.UsersScreen.route) {
             val usersViewModel = hiltViewModel<UsersViewModel>()
 
-            UsersMainScreen(navController, usersViewModel)
+            UsersMainScreen({ userId -> navController.navigate(Screen.UserDetailScreen.route + "/$userId")}, usersViewModel)
         }
 
         composable(
