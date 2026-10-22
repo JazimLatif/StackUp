@@ -15,4 +15,4 @@ I took inspiration from the Now in Android github repo
 and used Sealed classes to handle state properly.
 
 
-My next goals are to incorporate Nav3 into the project to keep up to date
+My next goals are to incorporate modules and Nav3 into the project to keep up to date
