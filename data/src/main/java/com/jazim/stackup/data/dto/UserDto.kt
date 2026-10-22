@@ -1,4 +1,4 @@
-package com.jazim.stackup.data.models
+package com.jazim.stackup.data.dto
 
 import com.google.gson.annotations.SerializedName
 

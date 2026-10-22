@@ -11,14 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jazim.stackup.R
-import com.jazim.stackup.domain.model.Badges
-import com.jazim.stackup.domain.model.User
+import com.jazim.stackup.data.model.Badges
+import com.jazim.stackup.data.model.User
 import com.jazim.stackup.presentation.navigation.Screen
 import com.jazim.stackup.presentation.ui.theme.StackupProjectTheme
 import java.text.NumberFormat

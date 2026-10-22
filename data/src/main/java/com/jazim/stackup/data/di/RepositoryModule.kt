@@ -1,7 +1,7 @@
-package com.jazim.pixelnews.di
+package com.jazim.stackup.data.di
 
+import com.jazim.stackup.data.repository.UsersRepository
 import com.jazim.stackup.data.repository.UsersRepositoryImpl
-import com.jazim.stackup.domain.repository.UsersRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,6 +1,6 @@
-package com.jazim.stackup.domain.repository
+package com.jazim.stackup.data.repository
 
-import com.jazim.stackup.domain.model.User
+import com.jazim.stackup.data.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 

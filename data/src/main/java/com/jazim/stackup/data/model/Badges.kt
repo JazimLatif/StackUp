@@ -1,4 +1,4 @@
-package com.jazim.stackup.domain.model
+package com.jazim.stackup.data.model
 
 data class Badges(
     val bronze: Int,

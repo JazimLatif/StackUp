@@ -1,23 +1,16 @@
 package com.jazim.stackup.data.repository
 
-import android.R.attr.order
-import android.util.Log
 import com.jazim.stackup.data.datastore.FollowingDataStore
 import com.jazim.stackup.data.networking.ApiService
 import com.jazim.stackup.data.toDomainModel
-import com.jazim.stackup.domain.model.Badges
-import com.jazim.stackup.domain.model.User
-import com.jazim.stackup.domain.repository.UsersRepository
-import kotlinx.coroutines.Dispatchers
+import com.jazim.stackup.data.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.collections.emptyList
