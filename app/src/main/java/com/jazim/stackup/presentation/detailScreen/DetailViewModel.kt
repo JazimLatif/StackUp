@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jazim.stackup.domain.model.User
+import com.jazim.stackup.data.model.User
 import com.jazim.stackup.domain.usecase.GetUserByIdUseCase
 import com.jazim.stackup.domain.usecase.ToggleFollowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,7 +1,7 @@
 package com.jazim.stackup.domain.usecase
 
-import com.jazim.stackup.domain.model.User
-import com.jazim.stackup.domain.repository.UsersRepository
+import com.jazim.stackup.data.model.User
+import com.jazim.stackup.data.repository.UsersRepository
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 

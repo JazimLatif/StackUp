@@ -1,10 +1,10 @@
 package com.jazim.stackup.data
 
-import com.jazim.stackup.data.models.BadgeCountsDto
-import com.jazim.stackup.data.models.UserDto
-import com.jazim.stackup.data.models.UsersResponse
-import com.jazim.stackup.domain.model.Badges
-import com.jazim.stackup.domain.model.User
+import com.jazim.stackup.data.dto.BadgeCountsDto
+import com.jazim.stackup.data.dto.UserDto
+import com.jazim.stackup.data.dto.UsersResponse
+import com.jazim.stackup.data.model.Badges
+import com.jazim.stackup.data.model.User
 
 fun UserDto.toDomainModel(isFollowed: Boolean = false): User {
     return User(

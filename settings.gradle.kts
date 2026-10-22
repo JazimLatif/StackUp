@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "StackUp"
 include(":app")
- 
+include(":data")

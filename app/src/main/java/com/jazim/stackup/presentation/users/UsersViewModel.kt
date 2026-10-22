@@ -3,7 +3,7 @@ package com.jazim.stackup.presentation.users
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jazim.stackup.domain.model.User
+import com.jazim.stackup.data.model.User
 import com.jazim.stackup.domain.usecase.ObserveUsersUseCase
 import com.jazim.stackup.domain.usecase.RefreshUsersUseCase
 import com.jazim.stackup.domain.usecase.ToggleFollowUseCase

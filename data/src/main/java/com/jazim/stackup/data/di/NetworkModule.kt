@@ -1,4 +1,4 @@
-package com.jazim.stackup.di
+package com.jazim.stackup.data.di
 
 import com.jazim.stackup.data.networking.ApiService
 import dagger.Module

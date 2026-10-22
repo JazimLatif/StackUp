@@ -1,4 +1,4 @@
-package com.jazim.stackup.di
+package com.jazim.stackup.data.di
 
 import android.content.Context
 import com.jazim.stackup.data.datastore.FollowingDataStore
