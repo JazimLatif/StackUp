@@ -1,13 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hiltAndroid)
 }
 
 android {
     namespace = "com.jazim.stackup.data"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 26
@@ -19,13 +18,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
-    api(libs.coroutines.core)
+    add("api",libs.coroutines.core)
     implementation(libs.androidx.core.ktx)
     implementation(libs.retrofit)
     implementation(libs.gson)

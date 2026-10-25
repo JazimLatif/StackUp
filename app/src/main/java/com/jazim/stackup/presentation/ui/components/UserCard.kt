@@ -18,23 +18,22 @@ import androidx.compose.ui.unit.dp
 import com.jazim.stackup.R
 import com.jazim.stackup.data.model.Badges
 import com.jazim.stackup.data.model.User
-import com.jazim.stackup.presentation.navigation.Screen
 import com.jazim.stackup.presentation.ui.theme.StackupProjectTheme
 import java.text.NumberFormat
-import java.util.Locale
+import androidx.compose.ui.platform.LocalLocale
 
 @Composable
 fun UserCard(
     user: User,
     onFollowClick: (Int) -> Unit,
-    onCardClick: (String) -> Unit
+    onCardClick: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable(onClick = { onCardClick(Screen.UserDetailScreen.route) })
+            .clickable(onClick = { onCardClick(user.id) })
         ,
         shape = RoundedCornerShape(12.dp)
     ) {
@@ -83,7 +82,7 @@ fun UserCard(
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = NumberFormat.getNumberInstance(Locale.getDefault())
+                                text = NumberFormat.getNumberInstance(LocalLocale.current.platformLocale)
                                     .format(user.reputation),
                                 style = MaterialTheme.typography.bodyMedium
                             )
