@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    api(libs.coroutines.core)
+    add("api",libs.coroutines.core)
     implementation(libs.androidx.core.ktx)
     implementation(libs.retrofit)
     implementation(libs.gson)

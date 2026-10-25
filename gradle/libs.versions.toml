@@ -21,8 +21,8 @@ arch-core ="2.2.0"
 coroutines ="1.11.0"
 robolectric = "4.17"
 material = "1.14.0"
-appcompat = "1.8.0"
 navigation3 = "1.2.0"
+lifecycleViewmodelNav3 = "2.11.0"
 
 [libraries]
 androidx-compose-material3-android = { module = "androidx.compose.material3:material3-android", version.ref = "material3Android" }
@@ -60,7 +60,8 @@ material = { group = "com.google.android.material", name = "material", version.r
 #Nav3
 androidx-navigation3-runtime = {module= "androidx.navigation3:navigation3-runtime", version.ref = "navigation3"}
 androidx-navigation3-ui = {module= "androidx.navigation3:navigation3-ui", version.ref = "navigation3"}
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "<latest>" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.12.0" }
+androidx-lifecycle-viewmodel-navigation3 = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-navigation3", version.ref = "lifecycleViewmodelNav3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
